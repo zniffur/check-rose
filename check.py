@@ -87,34 +87,37 @@ def check_rose_html():
         r = requests.get(
             'http://leghe.fantagazzetta.com/fantatilab/rose', proxies=proxies)
 
-    html_doc = r.content
-    soup = BeautifulSoup(html_doc, "html5lib")
+    if r.status_code == 200:
+        html_doc = r.content
+        soup = BeautifulSoup(html_doc, "html5lib")
 
-    link_list = soup.find_all("li", class_="list-rosters-item")
+        link_list = soup.find_all("li", class_="list-rosters-item")
 
-    return_string = ''
-    for link in link_list:
-        # print(link.h4.text)  # nome fantasq
-        return_string += link.h4.text + '<br>'
-        # print('----------')
-        tmplist = []
-        for child in link.table.tbody.children:
-            # tabella calciatori fantasq
-            if child.span is not None:
-                # print(child.span.text)
-                tmplist.append(child.span.text)
-        # print(tmplist.count('P'), tmplist.count('D'),
-        #       tmplist.count('C'), tmplist.count('A'))
-        return_string += str(tmplist.count('P')) + ' ' + str(tmplist.count(
-            'D')) + ' ' + str(tmplist.count('C')) + ' ' + str(tmplist.count('A')) + '<br>'
-        if (tmplist.count('P') > 4 or tmplist.count('D') > 10 or tmplist.count('C') > 10 or tmplist.count('A') > 8):
-            players = link.table.tbody
-            for player in players:
-                if player.span is not None:
-                    # print(player.span.text, player.a.text)
-                    return_string += player.span.text + ' ' + player.a.text + '<br>'
-        # print('--------------')
-        return_string += '--------------' + '<br>'
+        return_string = ''
+        for link in link_list:
+            # print(link.h4.text)  # nome fantasq
+            return_string += link.h4.text + '<br>'
+            # print('----------')
+            tmplist = []
+            for child in link.table.tbody.children:
+                # tabella calciatori fantasq
+                if child.span is not None:
+                    # print(child.span.text)
+                    tmplist.append(child.span.text)
+            # print(tmplist.count('P'), tmplist.count('D'),
+            #       tmplist.count('C'), tmplist.count('A'))
+            return_string += str(tmplist.count('P')) + ' ' + str(tmplist.count(
+                'D')) + ' ' + str(tmplist.count('C')) + ' ' + str(tmplist.count('A')) + '<br>'
+            if (tmplist.count('P') > 4 or tmplist.count('D') > 10 or tmplist.count('C') > 10 or tmplist.count('A') > 8):
+                players = link.table.tbody
+                for player in players:
+                    if player.span is not None:
+                        # print(player.span.text, player.a.text)
+                        return_string += player.span.text + ' ' + player.a.text + '<br>'
+            # print('--------------')
+            return_string += '--------------' + '<br>'
+    else:
+        return_string = 'Torino subito.'
 
     return return_string
 

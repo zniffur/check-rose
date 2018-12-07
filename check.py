@@ -1,0 +1,107 @@
+from bs4 import BeautifulSoup
+import requests
+
+
+def check_rose_print():
+    r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+
+    html_doc = r.content
+    soup = BeautifulSoup(html_doc, "html5lib")
+
+    link_list = soup.find_all("li", class_="list-rosters-item")
+
+    for link in link_list:
+        print(link.h4.text)  # nome fantasq
+        # print('----------')
+        tmplist = []
+        for child in link.table.tbody.children:
+            # tabella calciatori fantasq
+            if child.span is not None:
+                # print(child.span.text)
+                tmplist.append(child.span.text)
+        print(tmplist.count('P'), tmplist.count('D'),
+              tmplist.count('C'), tmplist.count('A'))
+        if (tmplist.count('P') > 4 or tmplist.count('D') > 10 or tmplist.count('C') > 10 or tmplist.count('A') > 8):
+            players = link.table.tbody
+            for player in players:
+                if player.span is not None:
+                    print(player.span.text, player.a.text)
+        print('--------------')
+
+
+def check_rose():
+    r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+
+    html_doc = r.content
+    soup = BeautifulSoup(html_doc, "html5lib")
+
+    link_list = soup.find_all("li", class_="list-rosters-item")
+
+    return_string = ''
+    for link in link_list:
+        # print(link.h4.text)  # nome fantasq
+        return_string += link.h4.text + '\n'
+        # print('----------')
+        tmplist = []
+        for child in link.table.tbody.children:
+            # tabella calciatori fantasq
+            if child.span is not None:
+                # print(child.span.text)
+                tmplist.append(child.span.text)
+        # print(tmplist.count('P'), tmplist.count('D'),
+        #       tmplist.count('C'), tmplist.count('A'))
+        return_string += str(tmplist.count('P')) + ' ' + str(tmplist.count(
+            'D')) + ' ' + str(tmplist.count('C')) + ' ' + str(tmplist.count('A')) + '\n'
+        if (tmplist.count('P') > 4 or tmplist.count('D') > 10 or tmplist.count('C') > 10 or tmplist.count('A') > 8):
+            players = link.table.tbody
+            for player in players:
+                if player.span is not None:
+                    # print(player.span.text, player.a.text)
+                    return_string += player.span.text + ' ' + player.a.text + '\n'
+        # print('--------------')
+        return_string += '--------------' + '\n'
+
+    return return_string
+
+
+def check_rose_html():
+    r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+
+    html_doc = r.content
+    soup = BeautifulSoup(html_doc, "html5lib")
+
+    link_list = soup.find_all("li", class_="list-rosters-item")
+
+    return_string = ''
+    for link in link_list:
+        # print(link.h4.text)  # nome fantasq
+        return_string += link.h4.text + '<br>'
+        # print('----------')
+        tmplist = []
+        for child in link.table.tbody.children:
+            # tabella calciatori fantasq
+            if child.span is not None:
+                # print(child.span.text)
+                tmplist.append(child.span.text)
+        # print(tmplist.count('P'), tmplist.count('D'),
+        #       tmplist.count('C'), tmplist.count('A'))
+        return_string += str(tmplist.count('P')) + ' ' + str(tmplist.count(
+            'D')) + ' ' + str(tmplist.count('C')) + ' ' + str(tmplist.count('A')) + '<br>'
+        if (tmplist.count('P') > 4 or tmplist.count('D') > 10 or tmplist.count('C') > 10 or tmplist.count('A') > 8):
+            players = link.table.tbody
+            for player in players:
+                if player.span is not None:
+                    # print(player.span.text, player.a.text)
+                    return_string += player.span.text + ' ' + player.a.text + '<br>'
+        # print('--------------')
+        return_string += '--------------' + '<br>'
+
+    return return_string
+
+
+if __name__ == '__main__':
+    # check_rose_print()
+    # mystring = check_rose()
+    mystring_html = check_rose_html()
+    # print(mystring)
+    print(mystring_html)

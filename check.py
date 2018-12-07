@@ -41,7 +41,11 @@ def check_rose_print():
 
 
 def check_rose():
-    r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+    try:
+        r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+    except requests.exceptions.ProxyError:
+        r = requests.get(
+            'http://leghe.fantagazzetta.com/fantatilab/rose', proxies=proxies)
 
     html_doc = r.content
     soup = BeautifulSoup(html_doc, "html5lib")
@@ -77,7 +81,11 @@ def check_rose():
 
 
 def check_rose_html():
-    r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+    try:
+        r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+    except requests.exceptions.ProxyError:
+        r = requests.get(
+            'http://leghe.fantagazzetta.com/fantatilab/rose', proxies=proxies)
 
     html_doc = r.content
     soup = BeautifulSoup(html_doc, "html5lib")

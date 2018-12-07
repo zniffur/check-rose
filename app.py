@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from check import check_rose_html
+import check
 
 
 app = Flask(__name__)
@@ -20,9 +20,9 @@ def system():
     )
 
 
-@app.route("/check")
-def check():
-    mystring = check_rose_html()
+@app.route("/check_rose")
+def check_rose():
+    mystring = check.check_rose_html()
     return mystring
 
 

@@ -1,9 +1,18 @@
 from bs4 import BeautifulSoup
 import requests
 
+proxies = {
+    'http': 'http://00917777:T2mT2m2!@lelapomi.telecomitalia.local:8080',
+    'https': 'http://00917777:T2mT2m2!@lelapomi.telecomitalia.local:8080',
+}
+
 
 def check_rose_print():
-    r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+    try:
+        r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+    except requests.exceptions.ProxyError:
+        r = requests.get(
+            'http://leghe.fantagazzetta.com/fantatilab/rose', proxies=proxies)
 
     html_doc = r.content
     soup = BeautifulSoup(html_doc, "html5lib")

@@ -82,12 +82,12 @@ def check_rose():
 
 def check_rose_html():
     try:
-        r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
-        print('NO PROXY ', str(r.status_code))
-    except requests.exceptions.ProxyError:
         r = requests.get(
             'http://leghe.fantagazzetta.com/fantatilab/rose', proxies=proxies)
         print('PROXY ', str(r.status_code))
+    except requests.exceptions.ProxyError:
+        r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
+        print('NO PROXY ', str(r.status_code))
 
     if r.status_code == 200:
         html_doc = r.content

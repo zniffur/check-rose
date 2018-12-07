@@ -82,8 +82,10 @@ def check_rose():
 
 def check_rose_html():
     try:
+        print('NO PROXY')
         r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
     except requests.exceptions.ProxyError:
+        print('WITH PROXY')
         r = requests.get(
             'http://leghe.fantagazzetta.com/fantatilab/rose', proxies=proxies)
 
@@ -117,7 +119,7 @@ def check_rose_html():
             # print('--------------')
             return_string += '--------------' + '<br>'
     else:
-        return_string = 'Torino subito.'
+        return_string = 'Torno subito.'
 
     return return_string
 

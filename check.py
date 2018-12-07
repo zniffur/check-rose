@@ -28,6 +28,8 @@ def check_rose_print():
                     print(player.span.text, player.a.text)
         print('--------------')
 
+    return r.status_code
+
 
 def check_rose():
     r = requests.get('http://leghe.fantagazzetta.com/fantatilab/rose')
@@ -50,8 +52,9 @@ def check_rose():
                 tmplist.append(child.span.text)
         # print(tmplist.count('P'), tmplist.count('D'),
         #       tmplist.count('C'), tmplist.count('A'))
-        return_string += str(tmplist.count('P')) + ' ' + str(tmplist.count(
-            'D')) + ' ' + str(tmplist.count('C')) + ' ' + str(tmplist.count('A')) + '\n'
+        return_string += str(tmplist.count('P')) + ' ' + str(tmplist.count('D')) + \
+            ' ' + str(tmplist.count('C')) + ' ' + \
+            str(tmplist.count('A')) + '\n'
         if (tmplist.count('P') > 4 or tmplist.count('D') > 10 or tmplist.count('C') > 10 or tmplist.count('A') > 8):
             players = link.table.tbody
             for player in players:
@@ -100,7 +103,7 @@ def check_rose_html():
 
 
 if __name__ == '__main__':
-    # check_rose_print()
+    # ret_code = check_rose_print()
     # mystring = check_rose()
     mystring_html = check_rose_html()
     # print(mystring)

@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 
 proxies = {
-    'http': 'http://00917777:T2mT2m2!@lelapomi.telecomitalia.local:8080',
-    'https': 'http://00917777:T2mT2m2!@lelapomi.telecomitalia.local:8080',
+    'http': 'http://00917777:T3mT3m3!@lelapomi.telecomitalia.local:8080',
+    'https': 'http://00917777:T3mT3m3!@lelapomi.telecomitalia.local:8080',
 }
 
 
